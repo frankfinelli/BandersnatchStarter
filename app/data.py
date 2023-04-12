@@ -8,18 +8,34 @@ from pymongo import MongoClient
 
 
 class Database:
+    load_dotenv()
+    database = MongoClient(
+        getenv("DB_URL"), tlsCAFile=where()
+    )["Database"]
+
+    def __init__(self, collection: str):
+        self.collection = self.database[collection]
 
     def seed(self, amount):
-        pass
+        return self.collection.insert_many(
+            [Monster().to_dict() for _ in range(amount)]
+        ).acknowledged
 
     def reset(self):
-        pass
+        self.collection.delete_many({})
 
     def count(self) -> int:
-        pass
+        return self.collection.count_documents({})
 
     def dataframe(self) -> DataFrame:
-        pass
+        cursor = self.collection.find({})
+        df = DataFrame(list(cursor))
+        return df
 
     def html_table(self) -> str:
-        pass
+        return self.dataframe().to_html()
+
+
+if __name__ == '__main__':
+    db = Database('xxx')
+    db.seed(6)
