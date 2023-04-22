@@ -28,7 +28,7 @@ class Database:
         return self.collection.count_documents({})
 
     def dataframe(self) -> DataFrame:
-        cursor = self.collection.find({})
+        cursor = self.collection.find({}, {'_id': False})
         df = DataFrame(list(cursor))
         return df
 
@@ -38,4 +38,4 @@ class Database:
 
 if __name__ == '__main__':
     db = Database('xxx')
-    db.seed(6)
+    db.seed(1000)
