@@ -39,3 +39,4 @@ class Database:
 if __name__ == '__main__':
     db = Database('xxx')
     db.seed(1000)
+
