@@ -10,7 +10,7 @@ from app.data import Database
 from app.graph import chart
 from app.machine import Machine
 
-SPRINT = 2
+SPRINT = 3
 APP = Flask(__name__)
 
 
@@ -42,7 +42,7 @@ def view():
         return render_template("view.html")
     db = Database('xxx')
     options = ["Level", "Health", "Energy", "Sanity", "Rarity", "Type"]
-    x_axis = request.values.get("x_axis") or options[1]
+    x_axis = request.values.get("x_axis") or options[0]
     y_axis = request.values.get("y_axis") or options[2]
     target = request.values.get("target") or options[4]
     graph = chart(
